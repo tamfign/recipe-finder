@@ -1,10 +1,18 @@
 <!DOCTYPE HTML>
 <html>
 <head> 
-    <title>Getting Started: Serving Web Content</title> 
+    <title>Recipe Finder</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p>Get your greeting <a href="/greeting">here</a></p>
+    <form action="/findRecipe" method="post">
+        <p>Item of Fridge (CSV):</p><br>
+	<textarea name="fridge_list" cols="40" rows="10"></textarea> <br>
+
+	<p>Recipes (JSON):</p><br>
+	<textarea name="recipes" cols="40" rows="10"></textarea> <br>
+
+	<input type="submit" name="Submit" />
+    </form>
 </body>
 </html>
