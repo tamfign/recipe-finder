@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package hello;
+package recipefinder;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -28,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = GreetingController.class)
+@WebMvcTest(controllers = FindRecipeController.class)
 public class ApplicationTest {
 
     @Autowired
@@ -38,19 +38,21 @@ public class ApplicationTest {
     public void homePage() throws Exception {
         // N.B. jsoup can be useful for asserting HTML content
         mockMvc.perform(get("/index.html"))
-                .andExpect(content().string(containsString("Get your greeting")));
+                .andExpect(content().string(containsString("Item of Fridge")));
     }
 
+    //TODO
     @Test
     public void greeting() throws Exception {
-        mockMvc.perform(get("/greeting"))
-                .andExpect(content().string(containsString("Hello, World!")));
+        mockMvc.perform(get("/findRecipe"))
+                .andExpect(content().string(containsString("")));
     }
 
+    //TODO
     @Test
     public void greetingWithUser() throws Exception {
-        mockMvc.perform(get("/greeting").param("name", "Greg"))
-                .andExpect(content().string(containsString("Hello, Greg!")));
+        mockMvc.perform(get("/findRecipe").param("recipes", ""))
+                .andExpect(content().string(containsString("")));
     }
 
 }
