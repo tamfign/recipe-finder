@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class FindRecipeController {
 
-    @PostMapping("/findRecipe")
-    public String findRecipe(@RequestParam(fridgeList="fridgeList", required=true, defaultValue="") String fridgeList, 
-		             @RequestParam(recipes="recipes", required=true, defaultValue="") recipes, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
-    }
+	@PostMapping("/findRecipe")
+	public String findRecipe(@RequestParam(name = "fridgeList", required = true, defaultValue = "") String fridgeList,
+			@RequestParam(name = "recipes", required = true, defaultValue = "") String recipes, Model model) {
+		model.addAttribute("name", fridgeList);
+		return "greeting";
+	}
 
-    //TODO map error
+	// TODO map error
 }
