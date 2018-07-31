@@ -19,7 +19,7 @@ public class ModelTest {
 		try {
 			Item item = Item.getItem("bread,10,slices,25/12/2014");
 
-			assertEquals(item.getName(), "bread");
+			assertEquals(item.getItem(), "bread");
 			assertEquals(item.getAmount(), 10);
 			assertEquals(item.getUnit(), Item.Unit.slices);
 
@@ -36,11 +36,29 @@ public class ModelTest {
 		ArrayList<Item> list = ItemParser.getInstance().parse(stream);
 
 		assertEquals(list.size(), 5);
-		assertEquals(list.get(4).getName(), "mixed salad");
+		assertEquals(list.get(4).getItem(), "mixed salad");
 		try {
 			assertTrue(list.get(4).getUseBy().compareTo(formatter.parse("26/12/2013")) == 0);
 		} catch (ParseException e) {
 			fail("Fridge Item parse fail");
+		}
+	}
+
+	@Test
+	public void parseRecipe() {
+		final String steam = "[\r\n" + "{" + "\"name\": \"grilled cheese on toast\", \"ingredients\": ["
+				+ "{ \"item\":\"bread\", \"amount\":\"2\", \"unit\":\"slices\"}, { \"item\":\"cheese\", \"amount\":\"2\", \"unit\":\"slices\"}"
+				+ "]" + "}" + "," + "{" + "\"name\": \"salad sandwich\", \"ingredients\": ["
+				+ "{ \"item\":\"bread\", \"amount\":\"2\", \"unit\":\"slices\"},"
+				+ "{ \"item\":\"mixed salad\", \"amount\":\"100\", \"unit\":\"grams\"}" + "]" + "}" + "]";
+
+		try {
+			ArrayList<Recipe> recipes = RecipeParser.parse(steam);
+
+			assertEquals(recipes.size(), 2);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Recipe parse fail");
 		}
 	}
 }

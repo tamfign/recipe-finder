@@ -10,12 +10,22 @@ public class Item {
 		of, grams, ml, slices
 	}
 
-	private String name;
+	private String item;
 	private int amount;
 	private Unit unit;
 	private Date useBy;
 
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+
+	public Item() {
+	}
+
+	private Item(String item, int amount, Unit unit, Date useBy) {
+		this.item = item;
+		this.amount = amount;
+		this.unit = unit;
+		this.useBy = useBy;
+	}
 
 	public static Item getItem(String str) throws ParseException {
 		String[] params = str.trim().split(",");
@@ -24,13 +34,6 @@ public class Item {
 			throw new ParseException("Fail to parse string to item", 0);
 
 		return new Item(params[0], Integer.parseInt(params[1]), parseUnit(params[2]), dateFormatter.parse(params[3]));
-	}
-
-	private Item(String name, int amount, Unit unit, Date useBy) {
-		this.name = name;
-		this.amount = amount;
-		this.unit = unit;
-		this.useBy = useBy;
 	}
 
 	private static Unit parseUnit(String str) throws ParseException {
@@ -48,8 +51,24 @@ public class Item {
 		}
 	}
 
-	public String getName() {
-		return name;
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
+
+	public void setUseBy(Date useBy) {
+		this.useBy = useBy;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	public String getItem() {
+		return item;
 	}
 
 	public int getAmount() {
