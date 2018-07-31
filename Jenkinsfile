@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deliver') {
             steps {
-              sh 'java -jar target/gs-serving-web-content-0.1.0.jar'
+              sh './scripts/deliver.sh'
             }
         }
     }
