@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FridgeItem {
+public class Item {
 
 	public enum Unit {
 		of, grams, ml, slices
@@ -17,16 +17,16 @@ public class FridgeItem {
 
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 
-	public static FridgeItem getItem(String str) throws ParseException {
+	public static Item getItem(String str) throws ParseException {
 		String[] params = str.trim().split(",");
 
 		if (params.length != 4)
 			throw new ParseException("Fail to parse string to item", 0);
 
-		return new FridgeItem(params[0], Integer.parseInt(params[1]), parseUnit(params[2]), dateFormatter.parse(params[3]));
+		return new Item(params[0], Integer.parseInt(params[1]), parseUnit(params[2]), dateFormatter.parse(params[3]));
 	}
 
-	private FridgeItem(String name, int amount, Unit unit, Date useBy) {
+	private Item(String name, int amount, Unit unit, Date useBy) {
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
