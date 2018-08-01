@@ -16,6 +16,9 @@ public class RecipeFinder {
 			ArrayList<Item> itemList) {
 		String ret = DEFAULT_RET;
 
+		if (recipeList == null || itemList == null)
+			return ret;
+
 		for (Recipe recipe : recipeList) {
 			int count = 0;
 			Date recipeClosestUseBy = null;

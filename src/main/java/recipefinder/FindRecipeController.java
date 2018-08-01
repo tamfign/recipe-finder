@@ -42,7 +42,7 @@ public class FindRecipeController {
 		result = new RecipeFinder().findRecipe(recipeList, itemInFridge);
 
 		model.addAttribute("result", result);
-		return "result";
+		return "index";
 	}
 
 }
