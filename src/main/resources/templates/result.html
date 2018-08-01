@@ -32,10 +32,13 @@
 
 	<!-- Pop up Modal on page load -->
 	<script type="text/javascript">
-		$(window).on(
-			'load',
+		$(window).on('load',
 			function() {
 				$('#modal').modal('show');
+			});
+		$('#modal').on('hidden.bs.modal',
+			function () {
+				window.history.back();
 			});
 	</script>
 
