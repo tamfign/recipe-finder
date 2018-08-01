@@ -30,6 +30,10 @@ public class FindRecipeController {
 		ArrayList<Recipe> recipeList = null;
 		ArrayList<Item> itemInFridge = null;
 
+		/*
+		 * Check and analyse the csv of items. Pop up error message if exception
+		 * occurs.
+		 */
 		try {
 			itemInFridge = ItemParser.parse(fridgeListStr);
 		} catch (Exception e) {
@@ -38,6 +42,10 @@ public class FindRecipeController {
 			return nextPage;
 		}
 
+		/*
+		 * Check and analyse the JSON of recipes. Pop up error message if
+		 * exception occurs.
+		 */
 		try {
 			recipeList = RecipeParser.parse(recipesStr);
 		} catch (Exception e) {
@@ -46,7 +54,10 @@ public class FindRecipeController {
 			return nextPage;
 		}
 
-		model.addAttribute("result", LABEL_RECOMMEDATION
+		/*
+		 * Find the recipe basing on the rules. Pop up the result message.
+		 */
+		model.addAttribute(RESULT_ATTR, LABEL_RECOMMEDATION
 				+ new RecipeFinder().findRecipe(recipeList, itemInFridge));
 		return nextPage;
 	}

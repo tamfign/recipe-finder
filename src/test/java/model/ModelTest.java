@@ -20,7 +20,7 @@ public class ModelTest {
 	@Test
 	public void parseItem() {
 		try {
-			Item item = Item.getItem("bread,10,slices,25/12/2014");
+			Item item = Item.genItem("bread,10,slices,25/12/2014");
 
 			assertEquals(item.getItem(), "bread");
 			assertEquals(item.getAmount(), 10);

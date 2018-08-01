@@ -2,6 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * Object of Recipe
+ * 
+ * @author Andrew Y
+ *
+ */
 public class Recipe {
 	private String name;
 	private ArrayList<Item> ingredients;

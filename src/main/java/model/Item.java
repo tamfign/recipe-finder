@@ -4,23 +4,33 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ *
+ * Object of Item
+ *
+ * @author Andrew Y
+ *
+ */
 public class Item {
 
 	public enum Unit {
 		of, grams, ml, slices
 	}
 
-	private String item;
+	private String item; // Name of the item.
 	private int amount;
 	private Unit unit;
 	private Date useBy;
 
-	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(
-			"dd/MM/yyyy");
+	// Date formatter for item generation.
+	private static final SimpleDateFormat dateFormatter
+			= new SimpleDateFormat("dd/MM/yyyy");
 
+	// Default constructor
 	public Item() {
 	}
 
+	// Constructor with parameters.
 	private Item(String item, int amount, Unit unit, Date useBy) {
 		this.item = item;
 		this.amount = amount;
@@ -28,9 +38,16 @@ public class Item {
 		this.useBy = useBy;
 	}
 
-	public static Item getItem(String str) throws ParseException {
+	/**
+	 * Convert string to Item object.
+	 * 
+	 * @param str String to be converted.
+	 * @return Item object converted from string.
+	 * @throw ParseException While csv format doesn't match.
+	 * 
+	 */
+	public static Item genItem(String str) throws ParseException {
 		String[] params = str.trim().split(",");
-
 		if (params.length != 4)
 			throw new ParseException("Fail to parse string to item", 0);
 
@@ -38,6 +55,12 @@ public class Item {
 				parseUnit(params[2]), dateFormatter.parse(params[3]));
 	}
 
+	/**
+	 * 
+	 * @param str String of unit.
+	 * @return Unit in enum.
+	 * @throws ParseException String doesn't match any unit of enum.
+	 */
 	private static Unit parseUnit(String str) throws ParseException {
 		switch (str) {
 		case "of":
@@ -85,6 +108,9 @@ public class Item {
 		return useBy;
 	}
 
+	/**
+	 * @return Whether today is before use-by date.
+	 */
 	public boolean isExpired() {
 		return useBy.compareTo(new Date()) < 0;
 	}
