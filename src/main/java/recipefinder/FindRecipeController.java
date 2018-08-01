@@ -16,6 +16,8 @@ import model.RecipeParser;
 public class FindRecipeController {
 
 	private static final String LABEL_RECOMMEDATION = "Recommedation of Tonight:   ";
+	private static final String RECIPE_ERROR = "Recipes cannot be recognised. Please check the format";
+	private static final String ITEM_ERROR = "Item CSV cannnot be recognised. Please check the format";
 
 	@PostMapping("/findRecipe")
 	public String findRecipe(
@@ -23,29 +25,30 @@ public class FindRecipeController {
 			@RequestParam(name = "recipes", required = true, defaultValue = "") String recipesStr,
 			Model model) {
 
-		String result = "";
+		final String nextPage = "result";
+		final String RESULT_ATTR = "result";
 		ArrayList<Recipe> recipeList = null;
 		ArrayList<Item> itemInFridge = null;
 
 		try {
-			recipeList = RecipeParser.parse(recipesStr);
+			itemInFridge = ItemParser.parse(fridgeListStr);
 		} catch (Exception e) {
-			// TODO Error page.
 			e.printStackTrace();
+			model.addAttribute(RESULT_ATTR, ITEM_ERROR);
+			return nextPage;
 		}
 
 		try {
-			itemInFridge = ItemParser.parse(fridgeListStr);
+			recipeList = RecipeParser.parse(recipesStr);
 		} catch (Exception e) {
-			// TODO Error page.
 			e.printStackTrace();
+			model.addAttribute(RESULT_ATTR, RECIPE_ERROR);
+			return nextPage;
 		}
 
-		result = LABEL_RECOMMEDATION
-				+ new RecipeFinder().findRecipe(recipeList, itemInFridge);
-
-		model.addAttribute("result", result);
-		return "result";
+		model.addAttribute("result", LABEL_RECOMMEDATION
+				+ new RecipeFinder().findRecipe(recipeList, itemInFridge));
+		return nextPage;
 	}
 
 }
