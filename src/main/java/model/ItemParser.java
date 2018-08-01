@@ -20,9 +20,9 @@ public class ItemParser {
 		ArrayList<Item> list = new ArrayList<Item>();
 		String[] itemStrs = str.split("\\r?\\n");
 
-		for (int i = 0; i < itemStrs.length; i++) {
+		for (String itemStr : itemStrs) {
 			try {
-				Item item = Item.getItem(itemStrs[i]);
+				Item item = Item.getItem(itemStr);
 				list.add(item);
 			} catch (ParseException e) {
 				e.printStackTrace();

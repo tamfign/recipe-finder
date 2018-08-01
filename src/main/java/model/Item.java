@@ -15,7 +15,8 @@ public class Item {
 	private Unit unit;
 	private Date useBy;
 
-	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(
+			"dd/MM/yyyy");
 
 	public Item() {
 	}
@@ -33,7 +34,8 @@ public class Item {
 		if (params.length != 4)
 			throw new ParseException("Fail to parse string to item", 0);
 
-		return new Item(params[0], Integer.parseInt(params[1]), parseUnit(params[2]), dateFormatter.parse(params[3]));
+		return new Item(params[0], Integer.parseInt(params[1]),
+				parseUnit(params[2]), dateFormatter.parse(params[3]));
 	}
 
 	private static Unit parseUnit(String str) throws ParseException {
@@ -81,5 +83,9 @@ public class Item {
 
 	public Date getUseBy() {
 		return useBy;
+	}
+
+	public boolean isExpired() {
+		return useBy.compareTo(new Date()) < 0;
 	}
 }

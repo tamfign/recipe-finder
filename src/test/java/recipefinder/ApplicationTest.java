@@ -19,6 +19,9 @@ package recipefinder;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,32 +30,55 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import model.Item;
+import model.ItemParser;
+import model.Recipe;
+import model.RecipeParser;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = FindRecipeController.class)
 public class ApplicationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Test
-    public void homePage() throws Exception {
-        // N.B. jsoup can be useful for asserting HTML content
-        mockMvc.perform(get("/index.html"))
-                .andExpect(content().string(containsString("Item of Fridge")));
-    }
+	@Test
+	public void homePage() throws Exception {
+		// N.B. jsoup can be useful for asserting HTML content
+		mockMvc.perform(get("/index.html"))
+				.andExpect(content().string(containsString("Item of Fridge")));
+	}
 
-    //TODO
-    @Test
-    public void greeting() throws Exception {
-        mockMvc.perform(get("/findRecipe"))
-                .andExpect(content().string(containsString("")));
-    }
+	@Test
+	public void findRecipe() {
+		RecipeFinder finder = new RecipeFinder();
 
-    //TODO
-    @Test
-    public void greetingWithUser() throws Exception {
-        mockMvc.perform(get("/findRecipe").param("recipes", ""))
-                .andExpect(content().string(containsString("")));
-    }
+		try {
+			ArrayList<Item> items = ItemParser.getInstance()
+					.parse(TestData.FRIDGE_ITEM_TEST_STREAM);
+			ArrayList<Recipe> recipes = RecipeParser
+					.parse(TestData.RECIPE_TEST_STREAM);
+
+			String result = finder.findRecipe(recipes, items);
+			assertEquals(result, "salad sandwich");
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Find recipe failed");
+		}
+	}
+
+	// TODO
+	@Test
+	public void greeting() throws Exception {
+		mockMvc.perform(get("/findRecipe"))
+				.andExpect(content().string(containsString("")));
+	}
+
+	// TODO
+	@Test
+	public void greetingWithUser() throws Exception {
+		mockMvc.perform(get("/findRecipe").param("recipes", ""))
+				.andExpect(content().string(containsString("")));
+	}
 
 }

@@ -10,9 +10,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import recipefinder.TestData;
+
 @RunWith(SpringRunner.class)
 public class ModelTest {
-	private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	private final SimpleDateFormat formatter = new SimpleDateFormat(
+			"dd/MM/yyyy");
 
 	@Test
 	public void parseItem() {
@@ -23,7 +26,9 @@ public class ModelTest {
 			assertEquals(item.getAmount(), 10);
 			assertEquals(item.getUnit(), Item.Unit.slices);
 
-			assertTrue(item.getUseBy().compareTo(formatter.parse("25/12/2014")) == 0);
+			assertTrue(item.getUseBy()
+					.compareTo(formatter.parse("25/12/2014")) == 0);
+			assertTrue(item.isExpired());
 		} catch (Exception e) {
 			fail("Fridge Item parse fail");
 		}
@@ -31,14 +36,14 @@ public class ModelTest {
 
 	@Test
 	public void parseItemList() {
-		final String stream = "bread,10,slices,25/12/2014\r\n" + "cheese,10,slices,25/12/2014\r\n"
-				+ "butter,250,grams,25/12/2014\r\n peanut butter,250,grams,2/12/2014\r\n mixed salad,150,grams,26/12/2013";
-		ArrayList<Item> list = ItemParser.getInstance().parse(stream);
+		ArrayList<Item> list = ItemParser.getInstance()
+				.parse(TestData.FRIDGE_ITEM_TEST_STREAM);
 
 		assertEquals(list.size(), 5);
 		assertEquals(list.get(4).getItem(), "mixed salad");
 		try {
-			assertTrue(list.get(4).getUseBy().compareTo(formatter.parse("26/12/2013")) == 0);
+			assertTrue(list.get(4).getUseBy()
+					.compareTo(formatter.parse("26/12/2013")) == 0);
 		} catch (ParseException e) {
 			fail("Fridge Item parse fail");
 		}
@@ -46,16 +51,14 @@ public class ModelTest {
 
 	@Test
 	public void parseRecipe() {
-		final String steam = "[\r\n" + "{" + "\"name\": \"grilled cheese on toast\", \"ingredients\": ["
-				+ "{ \"item\":\"bread\", \"amount\":\"2\", \"unit\":\"slices\"}, { \"item\":\"cheese\", \"amount\":\"2\", \"unit\":\"slices\"}"
-				+ "]" + "}" + "," + "{" + "\"name\": \"salad sandwich\", \"ingredients\": ["
-				+ "{ \"item\":\"bread\", \"amount\":\"2\", \"unit\":\"slices\"},"
-				+ "{ \"item\":\"mixed salad\", \"amount\":\"100\", \"unit\":\"grams\"}" + "]" + "}" + "]";
-
 		try {
-			ArrayList<Recipe> recipes = RecipeParser.parse(steam);
+			ArrayList<Recipe> recipes = RecipeParser
+					.parse(TestData.RECIPE_TEST_STREAM);
 
 			assertEquals(recipes.size(), 2);
+			assertEquals(recipes.get(1).getName(), "salad sandwich");
+			assertEquals(recipes.get(0).getIngredients().get(1).getItem(),
+					"cheese");
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Recipe parse fail");

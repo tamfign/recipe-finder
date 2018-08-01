@@ -9,11 +9,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RecipeParser {
 
-	public static ArrayList<Recipe> parse(String str) throws JsonParseException, JsonMappingException, IOException {
+	public static ArrayList<Recipe> parse(String str)
+			throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		return objectMapper.readValue(str,
-				objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, Recipe.class));
+		return objectMapper.readValue(str, objectMapper.getTypeFactory()
+				.constructCollectionType(ArrayList.class, Recipe.class));
 	}
 
 }
