@@ -54,7 +54,7 @@ public class ApplicationTest {
 		RecipeFinder finder = new RecipeFinder();
 
 		try {
-			ArrayList<Item> items = ItemParser.getInstance()
+			ArrayList<Item> items = ItemParser
 					.parse(TestData.FRIDGE_ITEM_TEST_STREAM);
 			ArrayList<Recipe> recipes = RecipeParser
 					.parse(TestData.RECIPE_TEST_STREAM);

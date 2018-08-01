@@ -5,28 +5,13 @@ import java.util.ArrayList;
 
 public class ItemParser {
 
-	private static ItemParser _instance;
-
-	private ItemParser() {
-	}
-
-	public static ItemParser getInstance() {
-		if (_instance == null)
-			_instance = new ItemParser();
-		return _instance;
-	}
-
-	public ArrayList<Item> parse(String str) {
+	public static ArrayList<Item> parse(String str) throws ParseException {
 		ArrayList<Item> list = new ArrayList<Item>();
 		String[] itemStrs = str.split("\\r?\\n");
 
 		for (String itemStr : itemStrs) {
-			try {
-				Item item = Item.getItem(itemStr);
-				list.add(item);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			Item item = Item.getItem(itemStr);
+			list.add(item);
 		}
 		return list;
 	}

@@ -36,15 +36,20 @@ public class ModelTest {
 
 	@Test
 	public void parseItemList() {
-		ArrayList<Item> list = ItemParser.getInstance()
-				.parse(TestData.FRIDGE_ITEM_TEST_STREAM);
-
-		assertEquals(list.size(), 5);
-		assertEquals(list.get(4).getItem(), "mixed salad");
+		ArrayList<Item> list = null;
 		try {
+			list = ItemParser.parse(TestData.FRIDGE_ITEM_TEST_STREAM);
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+			fail("Fridge Item parse fail");
+		}
+
+		try {
+			assertEquals(list.size(), 5);
+			assertEquals(list.get(4).getItem(), "mixed salad");
 			assertTrue(list.get(4).getUseBy()
-					.compareTo(formatter.parse("26/12/2013")) == 0);
-		} catch (ParseException e) {
+					.compareTo(formatter.parse("26/12/2018")) == 0);
+		} catch (Exception e) {
 			fail("Fridge Item parse fail");
 		}
 	}
