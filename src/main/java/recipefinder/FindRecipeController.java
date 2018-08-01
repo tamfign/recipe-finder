@@ -15,6 +15,8 @@ import model.RecipeParser;
 @Controller
 public class FindRecipeController {
 
+	private static final String LABEL_RECOMMEDATION = "Recommedation of Tonight:   ";
+
 	@PostMapping("/findRecipe")
 	public String findRecipe(
 			@RequestParam(name = "fridgeList", required = true, defaultValue = "") String fridgeListStr,
@@ -39,10 +41,11 @@ public class FindRecipeController {
 			e.printStackTrace();
 		}
 
-		result = new RecipeFinder().findRecipe(recipeList, itemInFridge);
+		result = LABEL_RECOMMEDATION
+				+ new RecipeFinder().findRecipe(recipeList, itemInFridge);
 
 		model.addAttribute("result", result);
-		return "index";
+		return "result";
 	}
 
 }

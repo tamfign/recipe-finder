@@ -49,34 +49,13 @@
 		</div>
 	</div>
 
-	<!-- Modal -->
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog"
-		aria-labelledby="modal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-body">
-					<h1 th:text="'Recommedation of Tonight:  ' + ${result} + '!'"></h1>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<script type="text/javascript">
 		$(window).on(
-				'load',
-				function() {
-					document.getElementById("time").innerHTML += new Date()
-							.toDateString();
-
-					if ($(result) != "") {
-						$('#modal').modal('show');
-					}
-				});
+			'load',
+			function() {
+				document.getElementById("time").innerHTML += new Date()
+						.toDateString();
+			});
 	</script>
 
 </body>
