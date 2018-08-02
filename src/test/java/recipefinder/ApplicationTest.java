@@ -91,4 +91,9 @@ public class ApplicationTest {
 						containsString("salad sandwich")));
 	}
 
+	@Test
+	public void errorMsg() throws Exception {
+		mockMvc.perform(post("/error")).andExpect(content().string(
+				containsString("Fail to find recipe")));
+	}
 }
