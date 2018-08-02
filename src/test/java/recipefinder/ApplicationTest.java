@@ -18,6 +18,7 @@ package recipefinder;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.junit.Assert.*;
 
@@ -50,7 +51,7 @@ public class ApplicationTest {
 	}
 
 	@Test
-	public void findRecipe() {
+	public void recipeFinder() {
 		RecipeFinder finder = new RecipeFinder();
 
 		try {
@@ -67,18 +68,27 @@ public class ApplicationTest {
 		}
 	}
 
-	// TODO
 	@Test
-	public void greeting() throws Exception {
-		mockMvc.perform(get("/findRecipe"))
-				.andExpect(content().string(containsString("")));
+	public void findRecipe() throws Exception {
+		mockMvc.perform(post("/findRecipe")).andExpect(content()
+				.string(containsString("Item CSV cannnot be recognised")));
 	}
 
-	// TODO
 	@Test
-	public void greetingWithUser() throws Exception {
-		mockMvc.perform(get("/findRecipe").param("recipes", ""))
-				.andExpect(content().string(containsString("")));
+	public void findRecipeWithItem() throws Exception {
+		mockMvc.perform(post("/findRecipe").param("fridgeList",
+				TestData.FRIDGE_ITEM_TEST_STREAM))
+				.andExpect(content().string(
+						containsString("Recipes JSON cannot be recognised")));
+	}
+
+	@Test
+	public void findRecipeWithBoth() throws Exception {
+		mockMvc.perform(post("/findRecipe")
+				.param("fridgeList", TestData.FRIDGE_ITEM_TEST_STREAM)
+				.param("recipes", TestData.RECIPE_TEST_STREAM))
+				.andExpect(content().string(
+						containsString("salad sandwich")));
 	}
 
 }
